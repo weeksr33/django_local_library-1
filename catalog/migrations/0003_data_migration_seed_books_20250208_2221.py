@@ -6,11 +6,13 @@ from random import seed
 from django.db import migrations
 
 
+
 def seed_books(apps, schema_editor):
     Language = apps.get_model("catalog", "Language")
     Genre = apps.get_model("catalog", "Genre")
     Author = apps.get_model("catalog", "Author")
     Book = apps.get_model("catalog", "Book")
+    BookInstance = apps.get_model("catalog", "BookInstance")
 
     english = Language.objects.create(name="English")
     Language.objects.create(name="Español")
@@ -32,6 +34,8 @@ def seed_books(apps, schema_editor):
     science_fiction = Genre.objects.create(name="Science Fiction")
     graphic_novels = Genre.objects.create(name="Graphic Novels")
     politics = Genre.objects.create(name="Politics")
+    food = Genre.objects.create(name="Food Science")
+    kids = Genre.objects.create(name="Children's Literature")
 
     snyder = Author.objects.create(first_name="Timothy", last_name="Snyder")
     downey = Author.objects.create(first_name="Allen", last_name="Downey")
@@ -39,6 +43,8 @@ def seed_books(apps, schema_editor):
     adams = Author.objects.create(first_name="Douglas", last_name="Adams")
     stevenson = Author.objects.create(first_name="N. D.", last_name="Stevenson")
     hooks = Author.objects.create(first_name="bell", last_name="hooks")
+    frye = Author.objects.create(first_name="Marilyn", last_name="Frye")
+    kenji = Author.objects.create(first_name="J. Kenji", last_name="López-Alt")
 
     b_history = Book.objects.create(
         title="On Tyranny",
@@ -99,6 +105,42 @@ def seed_books(apps, schema_editor):
     )
     b_politics.genre.set([politics])
     b_politics.save()
+    b_frye = Book.objects.create(
+        title="The Politics of Reality: Essays in Feminist Theory",
+        author=frye,
+        summary="For anyone first coming to feminism, these essays serve as a backdrop ... for understanding the basic, early and continuing perspectives of feminists. And for all of us they provide a theoretical framework in which to read the present as well as the past.",
+        language=english,
+        isbn="9780895940995"
+    )
+    b_frye.genre.set([politics])
+    b_frye.save()
+
+    b_food_lab = Book.objects.create(
+        title="The Food Lab: Better Home Cooking Through Science",
+        author=kenji,
+        summary="Ever wondered how to pan-fry a steak with a charred crust and an interior that's perfectly medium-rare from edge to edge when you cut into it? How to make homemade mac 'n' cheese that is as satisfyingly gooey and velvety-smooth as the blue box stuff, but far tastier? How to roast a succulent, moist turkey (forget about brining!)—and use a foolproof method that works every time? As Serious Eats's culinary nerd-in-residence, J. Kenji López-Alt has pondered all these questions and more. In The Food Lab, Kenji focuses on the science behind beloved American dishes, delving into the interactions between heat, energy, and molecules that create great food. Kenji shows that often, conventional methods don't work that well, and home cooks can achieve far better results using new—but simple—techniques. In hundreds of easy-to-make recipes with over 1,000 full-color images, you will find out how to make foolproof Hollandaise sauce in just two minutes, how to transform one simple tomato sauce ...",
+        isbn="0393081087",
+        language=english,
+    )
+    b_food_lab.genre.set([food])
+    b_food_lab.save()
+
+    b_pizza_night = Book.objects.create(
+        title="Every Night is Pizza Night",
+        author=kenji,
+        summary="Pipo thinks that pizza is the best. No, Pipo knows that pizza is the best. It is scientific fact. But when she sets out on a neighborhood-spanning quest to prove it, she discovers that \"best\" might not mean what she thought it meant.",
+        isbn="1324005254",
+        language=english,
+    )
+    b_pizza_night.genre.set([kids])
+    b_pizza_night.save()
+
+    for b in Book.objects.all():
+        BookInstance.objects.create(
+            book=b,
+            imprint="Unlikely Imprint",
+            status="a",
+        )
 
 
 class Migration(migrations.Migration):
