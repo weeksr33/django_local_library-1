@@ -6,7 +6,6 @@ from random import seed
 from django.db import migrations
 
 
-
 def seed_books(apps, schema_editor):
     Language = apps.get_model("catalog", "Language")
     Genre = apps.get_model("catalog", "Genre")
@@ -110,7 +109,7 @@ def seed_books(apps, schema_editor):
         author=frye,
         summary="For anyone first coming to feminism, these essays serve as a backdrop ... for understanding the basic, early and continuing perspectives of feminists. And for all of us they provide a theoretical framework in which to read the present as well as the past.",
         language=english,
-        isbn="9780895940995"
+        isbn="9780895940995",
     )
     b_frye.genre.set([politics])
     b_frye.save()
@@ -128,7 +127,7 @@ def seed_books(apps, schema_editor):
     b_pizza_night = Book.objects.create(
         title="Every Night is Pizza Night",
         author=kenji,
-        summary="Pipo thinks that pizza is the best. No, Pipo knows that pizza is the best. It is scientific fact. But when she sets out on a neighborhood-spanning quest to prove it, she discovers that \"best\" might not mean what she thought it meant.",
+        summary='Pipo thinks that pizza is the best. No, Pipo knows that pizza is the best. It is scientific fact. But when she sets out on a neighborhood-spanning quest to prove it, she discovers that "best" might not mean what she thought it meant.',
         isbn="1324005254",
         language=english,
     )
