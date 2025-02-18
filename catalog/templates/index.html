@@ -13,5 +13,13 @@
   <li><strong>Copies:</strong> {{ num_instances }}</li>
   <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
   <li><strong>Authors:</strong> {{ num_authors }}</li>
+  <li><strong>Genre counts:</strong>
+    <ul>
+      {% for kind,count in genre_counts.items %}
+      <li><strong>{{ kind }}</strong>: {{ count }}</li>
+      {% endfor %}
+    </ul>
+  </li>
+  <li><strong>"scien" books:</strong> {{ scien_books_count }}</li>
 </ul>
 {% endblock %}
